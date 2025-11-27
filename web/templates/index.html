@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ assistant_name }} - AI Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+    <!-- Prism.js for code highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body class="theme-dark">
+    <!-- Main Container -->
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <div class="logo">
+                    <div class="logo-icon">✨</div>
+                    <h1 class="logo-text">{{ assistant_name }}</h1>
+                </div>
+            </div>
+            <div class="header-right">
+                <!-- Search Bar -->
+                <div class="search-container" id="searchContainer">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search the web..." autocomplete="off">
+                    <div class="search-suggestions" id="searchSuggestions"></div>
+                </div>
+                <div class="layout-controls">
+                    <button class="icon-button" id="layoutToggle" title="Toggle Layout (Ctrl+\)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="3" y="3" width="7" height="18"></rect>
+                            <rect x="14" y="3" width="7" height="18"></rect>
+                        </svg>
+                    </button>
+                    <button class="icon-button" id="chatPanelToggle" title="Toggle Chat Panel (Ctrl+Shift+C)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="status-indicator" id="statusIndicator">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Online</span>
+                </div>
+                <button class="icon-button" id="settingsBtn" title="Settings">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M12 1v6m0 6v6m9-9h-6m-6 0H3m15.364 6.364l-4.243-4.243m-4.242 0L5.636 18.364m12.728 0l-4.243-4.243m-4.242 0L5.636 5.636"></path>
+                    </svg>
+                </button>
+                <button class="icon-button" id="sidebarToggle" title="Toggle Sidebar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Sidebar Overlay -->
+            <div class="sidebar-overlay" id="sidebarOverlay"></div>
+            
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-content">
+                    <!-- Memory Panel -->
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title collapsible-header" data-section="memories">
+                            <span>💭</span> Memories
+                            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                <button class="icon-button-small" id="addMemoryBtn" title="Add Memory">+</button>
+                                <span class="collapse-icon">▼</span>
+                            </div>
+                        </h3>
+                        <div class="memory-list collapsible-content" id="memoryList" data-section="memories">
+                            <p class="empty-state">No memories yet</p>
+                        </div>
+                    </div>
+
+                    <!-- Commands Help -->
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title collapsible-header" data-section="commands">
+                            <span>⌨️</span> Commands
+                            <span class="collapse-icon">▼</span>
+                        </h3>
+                        <div class="commands-list collapsible-content" id="commandsList" data-section="commands">
+                            <div class="command-item">
+                                <code>/help</code>
+                                <span>Show all commands</span>
+                            </div>
+                            <div class="command-item">
+                                <code>/clear</code>
+                                <span>Clear chat</span>
+                            </div>
+                            <div class="command-item">
+                                <code>/remember</code>
+                                <span>Save memory</span>
+                            </div>
+                            <div class="command-item">
+                                <code>/code</code>
+                                <span>Generate code</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Split-Pane Container -->
+            <div class="split-pane-container" id="splitPaneContainer">
+                <!-- Chat Panel -->
+                <div class="chat-panel full" id="chatPanel">
+                    <div class="chat-container">
+                        <!-- Avatar Area -->
+                        <div class="avatar-container" id="avatarContainer">
+                            <div class="avatar" id="avatar">
+                                <div class="avatar-face">
+                                    <div class="avatar-eyes">
+                                        <div class="eye left-eye"></div>
+                                        <div class="eye right-eye"></div>
+                                    </div>
+                                    <div class="avatar-mouth"></div>
+                                </div>
+                            </div>
+                            <div class="avatar-status" id="avatarStatus">Ready to chat</div>
+                        </div>
+
+                        <!-- Messages Area -->
+                        <div class="messages-container" id="messagesContainer">
+                            <div class="welcome-message" id="welcomeMessage">
+                                <h2>Hello! I'm {{ assistant_name }} 👋</h2>
+                                <p>Your personal AI assistant. I'm here to help you with anything you need - from coding to conversations. How can I assist you today?</p>
+                                <div class="quick-actions">
+                                    <button class="quick-action-btn" data-action="help">Show Commands</button>
+                                    <button class="quick-action-btn" data-action="memories">View Memories</button>
+                                </div>
+                            </div>
+                            <div class="messages-list" id="messagesList"></div>
+                            <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                                <div class="typing-dots">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                                <span class="typing-text">{{ assistant_name }} is typing...</span>
+                            </div>
+                        </div>
+
+                        <!-- Input Area -->
+                        <div class="input-container">
+                            <div class="input-wrapper">
+                                <button class="voice-button" id="voiceButton" title="Voice Input (Click to start/stop)">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                                        <line x1="12" y1="19" x2="12" y2="23"></line>
+                                        <line x1="8" y1="23" x2="16" y2="23"></line>
+                                    </svg>
+                                </button>
+                                <button class="search-web-button" id="searchWebButton" title="Search the Web">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <path d="m21 21-4.35-4.35"></path>
+                                    </svg>
+                                </button>
+                                <textarea 
+                                    id="messageInput" 
+                                    class="message-input" 
+                                    placeholder="Type your message, use voice input, or search the web..."
+                                    rows="1"></textarea>
+                                <button class="send-button" id="sendButton" title="Send Message">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="voice-status" id="voiceStatus" style="display: none;">
+                                <span class="recording-indicator"></span>
+                                <span id="voiceStatusText">Listening...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resizer -->
+                <div class="resizer" id="resizer"></div>
+
+                <!-- Code Panel -->
+                <div class="code-panel hidden" id="codePanel">
+                    <div class="code-panel-header">
+                        <div class="code-panel-title">
+                            <span class="code-panel-icon">💻</span>
+                            <span class="code-panel-name" id="codePanelName">Code</span>
+                            <span class="code-panel-language" id="codePanelLanguage"></span>
+                        </div>
+                        <div class="code-panel-actions">
+                            <button class="code-panel-btn" id="codePanelCopy" title="Copy Code">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </button>
+                            <button class="code-panel-btn" id="codePanelFullscreen" title="Fullscreen">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                                </svg>
+                            </button>
+                            <button class="code-panel-btn" id="codePanelClose" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="code-panel-tabs" id="codePanelTabs"></div>
+                    <div class="code-panel-content" id="codePanelContent">
+                        <div class="code-panel-empty">
+                            <div class="code-panel-empty-icon">💻</div>
+                            <p>No code to display</p>
+                            <p class="code-panel-empty-hint">Code blocks will appear here when generated</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Research Canvas Panel -->
+                <div class="research-canvas hidden" id="researchCanvas">
+                    <div class="research-canvas-header">
+                        <div class="research-canvas-title">
+                            <span class="research-canvas-icon">🔬</span>
+                            <span class="research-canvas-name" id="researchCanvasName">Research</span>
+                            <span class="research-canvas-query" id="researchCanvasQuery"></span>
+                        </div>
+                        <div class="research-canvas-actions">
+                            <button class="research-canvas-btn" id="researchCanvasExport" title="Export Research">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                            </button>
+                            <button class="research-canvas-btn" id="researchCanvasFullscreen" title="Fullscreen">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                                </svg>
+                            </button>
+                            <button class="research-canvas-btn" id="researchCanvasClose" title="Close Panel">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="research-canvas-content" id="researchCanvasContent">
+                        <div class="research-canvas-empty">
+                            <div class="research-canvas-empty-icon">🔬</div>
+                            <p>No research to display</p>
+                            <p class="research-canvas-empty-hint">Research results will appear here when generated</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button class="modal-close" id="closeSettingsBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label>Theme</label>
+                    <select id="themeSelect">
+                        <option value="dark">Dark</option>
+                        <option value="light">Light</option>
+                    </select>
+                </div>
+                <div class="setting-group">
+                    <label>
+                        <input type="checkbox" id="ttsEnabled"> Enable Text-to-Speech
+                    </label>
+                </div>
+                <div class="setting-group">
+                    <label>Voice Language</label>
+                    <select id="voiceLanguageSelect"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Memory Modal -->
+    <div class="modal" id="memoryModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Memory</h2>
+                <button class="modal-close" id="closeMemoryBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Key</label>
+                    <input type="text" id="memoryKey" placeholder="e.g., birthday">
+                </div>
+                <div class="form-group">
+                    <label>Value</label>
+                    <textarea id="memoryValue" placeholder="e.g., August 9, 2006" rows="3"></textarea>
+                </div>
+                <button class="btn-primary" id="saveMemoryBtn">Save Memory</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="{{ url_for('static', filename='js/api.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/avatar.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/voice.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/search.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/research-canvas.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ui.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
+

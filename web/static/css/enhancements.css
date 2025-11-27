@@ -1,0 +1,775 @@
+/**
+ * CSS Enhancements for NOVA Web Interface
+ * Additional styling improvements for better visual appeal and UX
+ */
+
+/* ============================================
+   ENHANCED TRANSITIONS & ANIMATIONS
+   ============================================ */
+
+/* Smooth page transitions */
+.app-container {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Enhanced message animations with stagger */
+.message {
+    animation: slideInMessage 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-delay: calc(var(--message-index, 0) * 0.05s);
+}
+
+@keyframes slideInMessage {
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Smooth panel transitions */
+.code-panel,
+.research-canvas {
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.3s ease,
+                transform 0.3s ease;
+}
+
+.code-panel:not(.hidden),
+.research-canvas:not(.hidden) {
+    animation: slideInPanel 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideInPanel {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ============================================
+   ENHANCED BUTTON STYLES
+   ============================================ */
+
+/* Improved button hover effects */
+.icon-button,
+.code-panel-btn,
+.research-canvas-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.icon-button::after,
+.code-panel-btn::after,
+.research-canvas-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(139, 92, 246, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+    pointer-events: none;
+}
+
+.icon-button:hover::after,
+.code-panel-btn:hover::after,
+.research-canvas-btn:hover::after {
+    width: 200px;
+    height: 200px;
+}
+
+/* Enhanced send button */
+.send-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.send-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.send-button:hover::before {
+    left: 100%;
+}
+
+/* Button loading state */
+.button-loading {
+    position: relative;
+    color: transparent !important;
+    pointer-events: none;
+}
+
+.button-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   ENHANCED GLASS MORPHISM
+   ============================================ */
+
+.app-header,
+.input-container,
+.code-panel-header,
+.research-canvas-header {
+    background: rgba(26, 26, 46, 0.8);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.theme-light .app-header,
+.theme-light .input-container,
+.theme-light .code-panel-header,
+.theme-light .research-canvas-header {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* ============================================
+   ENHANCED SHADOWS & DEPTH
+   ============================================ */
+
+/* Layered shadows for depth */
+.message-bubble {
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        0 1px 3px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.message.user .message-bubble {
+    box-shadow: 
+        0 4px 12px rgba(99, 102, 241, 0.4),
+        0 2px 6px rgba(99, 102, 241, 0.3),
+        0 0 20px rgba(139, 92, 246, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.message.assistant .message-bubble:hover {
+    box-shadow: 
+        0 6px 16px rgba(0, 0, 0, 0.4),
+        0 3px 8px rgba(0, 0, 0, 0.3),
+        0 0 0 1px var(--border-light);
+}
+
+/* Enhanced code block shadows */
+.code-block-wrapper {
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.5),
+        0 2px 6px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.code-block-wrapper:hover {
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.6),
+        0 4px 10px rgba(0, 0, 0, 0.4),
+        0 0 0 1px var(--border-light),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transform: translateY(-3px);
+}
+
+/* ============================================
+   ENHANCED FOCUS STATES
+   ============================================ */
+
+/* Better focus visibility */
+*:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
+}
+
+.input-wrapper:focus-within {
+    border-color: var(--accent-primary);
+    box-shadow: 
+        0 0 0 3px rgba(139, 92, 246, 0.15),
+        0 4px 12px rgba(139, 92, 246, 0.1);
+    transform: translateY(-1px);
+}
+
+.message-input:focus {
+    outline: none;
+}
+
+/* ============================================
+   ENHANCED SCROLLBAR
+   ============================================ */
+
+/* Custom scrollbar with gradient */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
+    border-radius: 10px;
+    border: 2px solid var(--bg-secondary);
+    transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--accent-hover), var(--accent-primary));
+    border-color: var(--bg-tertiary);
+    box-shadow: 0 0 8px var(--accent-glow);
+}
+
+::-webkit-scrollbar-corner {
+    background: var(--bg-secondary);
+}
+
+/* Thin scrollbar for code areas */
+.code-panel-code::-webkit-scrollbar,
+.research-canvas-content::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.code-panel-code::-webkit-scrollbar-thumb,
+.research-canvas-content::-webkit-scrollbar-thumb {
+    background: var(--accent-primary);
+    border-radius: 4px;
+    border: 1px solid var(--bg-secondary);
+}
+
+/* ============================================
+   ENHANCED TYPOGRAPHY
+   ============================================ */
+
+/* Better text rendering */
+body {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "kern" 1, "liga" 1;
+}
+
+/* Enhanced heading styles */
+.welcome-message h2 {
+    text-shadow: 
+        0 0 20px var(--accent-glow),
+        0 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: -0.02em;
+}
+
+/* Better code font rendering */
+code,
+pre,
+.code-panel-code,
+.code-block-wrapper code {
+    font-feature-settings: "liga" 0;
+    font-variant-ligatures: none;
+    text-rendering: optimizeSpeed;
+}
+
+/* ============================================
+   ENHANCED LOADING STATES
+   ============================================ */
+
+/* Improved skeleton loader */
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--bg-tertiary) 0%,
+        var(--bg-hover) 50%,
+        var(--bg-tertiary) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+    border-radius: var(--radius-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.skeleton::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(139, 92, 246, 0.1),
+        transparent
+    );
+    animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* Enhanced typing indicator */
+.typing-dots span {
+    background: var(--accent-primary);
+    box-shadow: 0 0 8px var(--accent-glow);
+}
+
+.typing-dots span:nth-child(1) {
+    animation: typingDot 1.4s infinite;
+}
+
+.typing-dots span:nth-child(2) {
+    animation: typingDot 1.4s infinite 0.2s;
+}
+
+.typing-dots span:nth-child(3) {
+    animation: typingDot 1.4s infinite 0.4s;
+}
+
+@keyframes typingDot {
+    0%, 60%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.4;
+    }
+    30% {
+        transform: translateY(-8px) scale(1.2);
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   ENHANCED GRADIENTS
+   ============================================ */
+
+/* More vibrant gradients */
+.message.user .message-bubble {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%);
+}
+
+.voice-button,
+.send-button {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #8b5cf6 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.voice-button:hover,
+.send-button:hover {
+    background-size: 200% 200%;
+    animation: gradientShift 2s ease infinite;
+}
+
+/* ============================================
+   ENHANCED INTERACTIVE ELEMENTS
+   ============================================ */
+
+/* Better hover states for tabs */
+.code-panel-tab {
+    position: relative;
+    overflow: hidden;
+}
+
+.code-panel-tab::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent-primary);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.code-panel-tab:hover::before,
+.code-panel-tab.active::before {
+    transform: scaleX(1);
+}
+
+/* Enhanced resizer */
+.resizer {
+    position: relative;
+}
+
+.resizer::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px;
+    height: 40px;
+    background: var(--accent-primary);
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.resizer:hover::after,
+.resizer.active::after {
+    opacity: 1;
+}
+
+/* ============================================
+   ENHANCED MESSAGE ACTIONS
+   ============================================ */
+
+.message-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.message:hover .message-actions {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.message-action-btn {
+    backdrop-filter: blur(10px);
+    transition: all 0.2s ease;
+}
+
+.message-action-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 8px rgba(139, 92, 246, 0.3);
+}
+
+/* ============================================
+   ENHANCED CODE BLOCK STYLING
+   ============================================ */
+
+.code-block-header {
+    background: linear-gradient(135deg, #2a2a3e 0%, #1f1f3e 100%);
+    border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.code-block-view-panel-btn {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
+    transition: all 0.3s ease;
+}
+
+.code-block-view-panel-btn:hover {
+    background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.6);
+    transform: translateY(-2px);
+}
+
+.code-copy-btn.copied {
+    animation: copiedPulse 0.6s ease;
+}
+
+@keyframes copiedPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* ============================================
+   ENHANCED RESEARCH CANVAS
+   ============================================ */
+
+.research-section {
+    position: relative;
+    padding-left: 1rem;
+}
+
+.research-section::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--gradient-primary);
+    border-radius: 2px;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.research-section:hover::before {
+    opacity: 1;
+}
+
+.research-source {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.research-source::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.research-source:hover::before {
+    left: 100%;
+}
+
+.research-source:hover {
+    transform: translateX(4px);
+    border-left-color: var(--accent-primary);
+}
+
+/* ============================================
+   ENHANCED STATUS INDICATOR
+   ============================================ */
+
+.status-indicator {
+    position: relative;
+    overflow: hidden;
+}
+
+.status-dot {
+    position: relative;
+    z-index: 1;
+}
+
+.status-dot::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: var(--success);
+    opacity: 0.2;
+    animation: pulseRing 2s ease-out infinite;
+}
+
+@keyframes pulseRing {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.2;
+    }
+    50% {
+        opacity: 0.1;
+    }
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+}
+
+/* ============================================
+   ENHANCED QUICK ACTION BUTTONS
+   ============================================ */
+
+.quick-action-btn {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.quick-action-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--gradient-primary);
+    opacity: 0.1;
+    transition: left 0.5s ease;
+    z-index: -1;
+}
+
+.quick-action-btn:hover::after {
+    left: 0;
+}
+
+/* ============================================
+   ENHANCED INPUT FIELD
+   ============================================ */
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.input-wrapper:focus-within::after {
+    transform: scaleX(1);
+}
+
+/* ============================================
+   ENHANCED EMPTY STATES
+   ============================================ */
+
+.code-panel-empty,
+.research-canvas-empty {
+    animation: fadeInEmpty 0.6s ease;
+}
+
+@keyframes fadeInEmpty {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.code-panel-empty-icon,
+.research-canvas-empty-icon {
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 10px var(--accent-glow));
+}
+
+/* ============================================
+   ENHANCED RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 640px) {
+    .message-bubble {
+        padding: 0.875rem 1rem;
+    }
+    
+    .input-wrapper {
+        padding: 0.625rem;
+    }
+    
+    .code-block-wrapper {
+        border-radius: var(--radius-sm);
+    }
+}
+
+/* ============================================
+   ENHANCED ACCESSIBILITY
+   ============================================ */
+
+/* Better focus indicators for keyboard navigation */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================
+   ENHANCED SMOOTH SCROLLING
+   ============================================ */
+
+.messages-container,
+.code-panel-content,
+.research-canvas-content {
+    scroll-behavior: smooth;
+    scroll-padding: 1rem;
+}
+
+/* ============================================
+   ENHANCED SELECTION
+   ============================================ */
+
+::selection {
+    background: rgba(139, 92, 246, 0.3);
+    color: var(--text-primary);
+}
+
+::-moz-selection {
+    background: rgba(139, 92, 246, 0.3);
+    color: var(--text-primary);
+}
+
+/* ============================================
+   ENHANCED TOOLTIPS (if using)
+   ============================================ */
+
+[title] {
+    position: relative;
+}
+
+/* ============================================
+   ENHANCED PANEL HEADERS
+   ============================================ */
+
+.code-panel-header,
+.research-canvas-header {
+    position: relative;
+}
+
+.code-panel-header::after,
+.research-canvas-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--gradient-primary);
+    opacity: 0.3;
+}
+

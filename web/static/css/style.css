@@ -1,0 +1,301 @@
+/**
+ * Main Stylesheet for NOVA Web Interface
+ * Imports all component modules and base styles
+ */
+
+/* Import Component Modules - Must be at the top */
+@import url('components/utilities.css');
+@import url('components/header.css');
+@import url('components/sidebar.css');
+@import url('components/avatar.css');
+@import url('components/chat.css');
+@import url('components/code-panel.css');
+@import url('components/research-canvas.css');
+@import url('components/modals.css');
+@import url('components/search.css');
+@import url('enhancements.css');
+
+/* Base Reset & Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+*:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg-primary);
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow: hidden;
+    height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* App Container */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Main Content */
+.main-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+/* Ensure split-pane-container takes full width when sidebar is closed */
+.main-content .split-pane-container {
+    width: 100%;
+    flex: 1;
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gradient-primary);
+    border-radius: 10px;
+    border: 2px solid var(--bg-secondary);
+    transition: var(--transition);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gradient-accent);
+    border-color: var(--bg-tertiary);
+}
+
+/* Responsive Styles */
+@media (max-width: 640px) {
+    /* Small phones */
+    .message {
+        max-width: 90%;
+    }
+
+    .welcome-message {
+        padding: 2rem 1rem;
+    }
+
+    .welcome-message h2 {
+        font-size: 1.5rem;
+    }
+    
+    .input-container {
+        padding: 1rem;
+    }
+    
+    .header-right {
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    
+    .status-indicator {
+        display: none;
+    }
+    
+    .layout-controls {
+        display: none;
+    }
+    
+    .search-container {
+        display: none;
+    }
+    
+    /* Mobile: Stack panels vertically */
+    .split-pane-container {
+        flex-direction: column;
+    }
+    
+    .chat-panel.half,
+    .chat-panel.full {
+        width: 100% !important;
+        height: 50vh;
+    }
+    
+    .code-panel:not(.hidden) {
+        width: 100% !important;
+        height: 50vh;
+        border-left: none;
+        border-top: 1px solid var(--border-color);
+    }
+    
+    .resizer {
+        width: 100%;
+        height: 4px;
+        cursor: row-resize;
+        display: none;
+    }
+    
+    /* Code blocks on mobile */
+    .code-block-wrapper {
+        margin: 0.5rem 0;
+        border-radius: var(--radius-sm);
+    }
+    
+    .chat-panel.half .message.assistant .code-block-wrapper,
+    .chat-panel.full .message.assistant .code-block-wrapper {
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .chat-panel.half .message.assistant .code-block-wrapper .code-block-header,
+    .chat-panel.full .message.assistant .code-block-wrapper .code-block-header {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        flex-wrap: wrap;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .code-block-header {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .code-block-actions {
+        gap: 0.25rem;
+    }
+    
+    .code-block-view-panel-btn span:last-child {
+        display: none; /* Hide text on mobile, show only icon */
+    }
+    
+    .chat-panel.half .message.assistant .code-block-wrapper pre,
+    .chat-panel.full .message.assistant .code-block-wrapper pre {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        font-size: 0.75rem;
+    }
+    
+    .message-content pre {
+        padding: 1rem;
+        font-size: 0.75rem;
+    }
+    
+    .message-content pre code {
+        font-size: 0.75rem;
+    }
+    
+    .code-block-view-panel-btn,
+    .code-copy-btn {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.7rem;
+    }
+    
+    .code-panel-code {
+        padding: 1rem;
+        font-size: 0.75rem;
+    }
+    
+    .sidebar {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .app-header {
+        padding: 0.75rem 1rem;
+    }
+    
+    .logo-text {
+        font-size: 1.25rem;
+    }
+    
+    .split-pane-container:has(.code-panel:not(.hidden)) .resizer {
+        display: block;
+    }
+    
+    .code-panel.fullscreen {
+        height: 100vh !important;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+    /* Tablets */
+    .message {
+        max-width: 85%;
+    }
+
+    .welcome-message {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .welcome-message h2 {
+        font-size: 2rem;
+    }
+    
+    .input-container {
+        padding: 1.25rem;
+    }
+    
+    .code-panel:not(.hidden) {
+        min-width: 350px;
+    }
+    
+    .sidebar {
+        width: 280px;
+    }
+}
+
+@media (min-width: 1025px) {
+    /* Desktop */
+    .code-panel:not(.hidden) {
+        min-width: 400px;
+    }
+}
+
+@media (min-width: 1280px) {
+    /* Extra-large screens */
+    .app-header {
+        padding: 1.25rem 2rem;
+    }
+    
+    .messages-container {
+        padding: 2.5rem;
+    }
+    
+    .code-panel:not(.hidden) {
+        min-width: 450px;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .avatar-face,
+    .logo-icon {
+        animation: none !important;
+    }
+}

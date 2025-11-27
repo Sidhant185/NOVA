@@ -1,0 +1,186 @@
+/**
+ * Theme Variables
+ * Defines color schemes for dark and light themes
+ */
+
+:root {
+    /* Dark Theme (Default) - Enhanced */
+    --bg-primary: #0f0f23;
+    --bg-secondary: #1a1a2e;
+    --bg-tertiary: #16213e;
+    --bg-hover: #2a2a4e;
+    --bg-elevated: #1e1e3f;
+    
+    --text-primary: #f0f0f0;
+    --text-secondary: #b8b8c8;
+    --text-muted: #6b6b7f;
+    
+    --accent-primary: #8b5cf6;
+    --accent-secondary: #a78bfa;
+    --accent-hover: #7c3aed;
+    --accent-glow: rgba(139, 92, 246, 0.3);
+    
+    --user-message-bg: linear-gradient(135deg, #6366f1, #8b5cf6);
+    --assistant-message-bg: #1e1e3f;
+    
+    --border-color: #2d2d44;
+    --border-hover: #3d3d54;
+    --border-light: rgba(139, 92, 246, 0.2);
+    
+    --success: #10b981;
+    --error: #ef4444;
+    --warning: #f59e0b;
+    --info: #3b82f6;
+    
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.6);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.7);
+    --shadow-glow: 0 0 20px var(--accent-glow);
+    
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-theme: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    
+    --gradient-primary: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+    --gradient-secondary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    --gradient-accent: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 50%, #6366f1 100%);
+    
+    /* Component-specific colors */
+    --button-primary-bg: var(--gradient-primary);
+    --button-primary-hover: var(--gradient-accent);
+    --button-secondary-bg: var(--bg-tertiary);
+    --button-secondary-hover: var(--bg-hover);
+    
+    --input-bg: var(--bg-tertiary);
+    --input-border: var(--border-color);
+    --input-focus-border: var(--accent-primary);
+    --input-focus-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+    
+    --card-bg: var(--bg-secondary);
+    --card-border: var(--border-color);
+    --card-hover-shadow: var(--shadow-md);
+    
+    /* Code block colors */
+    --code-bg: #1a1a2e;
+    --code-header-bg: #2a2a3e;
+    --code-text: var(--text-primary);
+    --code-border: var(--border-color);
+    
+    /* Semantic color tokens with better contrast */
+    --success-bg: rgba(16, 185, 129, 0.1);
+    --success-border: rgba(16, 185, 129, 0.3);
+    --error-bg: rgba(239, 68, 68, 0.1);
+    --error-border: rgba(239, 68, 68, 0.3);
+    --warning-bg: rgba(245, 158, 11, 0.1);
+    --warning-border: rgba(245, 158, 11, 0.3);
+    --info-bg: rgba(59, 130, 246, 0.1);
+    --info-border: rgba(59, 130, 246, 0.3);
+}
+
+.theme-light {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    --bg-hover: #dee2e6;
+    --bg-elevated: #ffffff;
+    
+    --text-primary: #212529;
+    --text-secondary: #495057;
+    --text-muted: #6c757d;
+    
+    --accent-primary: #8b5cf6;
+    --accent-secondary: #6366f1;
+    --accent-hover: #7c3aed;
+    --accent-glow: rgba(139, 92, 246, 0.2);
+    
+    --user-message-bg: linear-gradient(135deg, #6366f1, #8b5cf6);
+    --assistant-message-bg: #f8f9fa;
+    
+    --border-color: #dee2e6;
+    --border-hover: #ced4da;
+    --border-light: rgba(139, 92, 246, 0.15);
+    
+    --success: #10b981;
+    --error: #ef4444;
+    --warning: #f59e0b;
+    --info: #3b82f6;
+    
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.25);
+    --shadow-glow: 0 0 15px var(--accent-glow);
+    
+    --gradient-primary: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+    --gradient-secondary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    --gradient-accent: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 50%, #6366f1 100%);
+    
+    /* Component-specific colors for light theme */
+    --button-primary-bg: var(--gradient-primary);
+    --button-primary-hover: var(--gradient-accent);
+    --button-secondary-bg: var(--bg-tertiary);
+    --button-secondary-hover: var(--bg-hover);
+    
+    --input-bg: #ffffff;
+    --input-border: var(--border-color);
+    --input-focus-border: var(--accent-primary);
+    --input-focus-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+    
+    --card-bg: #ffffff;
+    --card-border: var(--border-color);
+    --card-hover-shadow: var(--shadow-md);
+    
+    /* Code block colors for light theme */
+    --code-bg: #f8f9fa;
+    --code-header-bg: #e9ecef;
+    --code-text: var(--text-primary);
+    --code-border: var(--border-color);
+    
+    /* Semantic color tokens for light theme */
+    --success-bg: rgba(16, 185, 129, 0.1);
+    --success-border: rgba(16, 185, 129, 0.3);
+    --error-bg: rgba(239, 68, 68, 0.1);
+    --error-border: rgba(239, 68, 68, 0.3);
+    --warning-bg: rgba(245, 158, 11, 0.1);
+    --warning-border: rgba(245, 158, 11, 0.3);
+    --info-bg: rgba(59, 130, 246, 0.1);
+    --info-border: rgba(59, 130, 246, 0.3);
+}
+
+/* Theme transition - smooth color changes */
+* {
+    transition: var(--transition-theme);
+}
+
+/* Elements that should transition smoothly */
+body,
+.app-header,
+.sidebar,
+.modal-content,
+.message-bubble,
+.code-panel,
+.input-wrapper,
+.btn-primary,
+.icon-button {
+    transition: var(--transition-theme);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --border-color: #4d4d6d;
+        --text-secondary: #d0d0e0;
+    }
+    
+    .theme-light {
+        --border-color: #adb5bd;
+        --text-secondary: #343a40;
+    }
+}
