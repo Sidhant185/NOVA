@@ -23,7 +23,16 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__, 
             template_folder='templates',
             static_folder='static')
-app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY', 'nova-secret-key-change-in-production')
+
+# Get Flask secret key from environment - REQUIRED for production
+flask_secret_key = os.getenv('FLASK_SECRET_KEY')
+if not flask_secret_key:
+    import secrets
+    # Generate a random secret key for development if not set
+    # WARNING: This will change on every restart - set FLASK_SECRET_KEY in .env for production
+    flask_secret_key = secrets.token_hex(32)
+    logger.warning("FLASK_SECRET_KEY not set in .env - using randomly generated key (will change on restart)")
+app.config['SECRET_KEY'] = flask_secret_key
 
 # Enable CORS
 CORS(app, resources={r"/api/*": {"origins": "*"}})
