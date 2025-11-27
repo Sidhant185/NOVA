@@ -53,6 +53,17 @@ Data/*.mp3
 Data/*.html
 !Data/default_Profile.json
 
+# Root-level user data files (should not be committed)
+ChatLog.json
+Memory.json
+*_ChatLog.json
+*_Memory.json
+*_Milestones.json
+*_ProactiveCare.json
+*_Relationship.json
+default_ChatLog.json
+default_Memory.json
+
 # Audio files
 *.mp3
 *.wav
