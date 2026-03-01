@@ -2,6 +2,17 @@
 Multi-API LLM Provider
 Intelligently routes queries to the best API (Gemini, Groq, or Cursor).
 """
+import sys
+import os
+
+# Import compatibility fix FIRST - before any imports that might use importlib.metadata
+# Add parent directory to path for imports
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+try:
+    import compat  # This patches importlib.metadata for Python 3.9
+except ImportError:
+    pass  # If compat module doesn't exist, continue (might be Python 3.10+)
+
 import logging
 import re
 from typing import Dict, List, Optional, Tuple, Any

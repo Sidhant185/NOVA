@@ -26,10 +26,8 @@ from utils.llm_provider import LLMProvider
 # Setup logging
 logger = logging.getLogger(__name__)
 
-# Validate configuration
-is_valid, error_msg = Config.validate()
-if not is_valid:
-    raise ValueError(error_msg)
+# Note: Configuration validation is now done lazily in Chatbot.__init__()
+# to avoid blocking during module import
 
 # Note: Groq client is now initialized in LLMProvider
 # Keeping for backward compatibility if needed
@@ -94,6 +92,11 @@ def get_greeting() -> str:
 # === Chatbot Class ===
 class Chatbot:
     def __init__(self, user_id: str = None):
+        # Validate configuration (lazy validation - only when Chatbot is instantiated)
+        is_valid, error_msg = Config.validate()
+        if not is_valid:
+            raise ValueError(error_msg)
+        
         self.user_id = user_id or Config.USER_ID
         self.messages = []
         self.memory = {}

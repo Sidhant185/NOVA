@@ -20,3 +20,4 @@ flask-socketio
 flask-cors
 duckduckgo-search
 google-generativeai
+importlib_metadata>=5.0.0
