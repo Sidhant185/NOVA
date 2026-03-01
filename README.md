@@ -1,568 +1,773 @@
-# NOVA Assistant
+<p align="center">
+  <img src="https://img.shields.io/badge/NOVA-AI%20Assistant-8b5cf6?style=for-the-badge&logo=atom&logoColor=white" alt="NOVA Badge"/>
+</p>
 
-A comprehensive, voice-enabled AI assistant powered by Groq's Llama 3.1 or Google's Gemini, featuring advanced conversational capabilities, persistent memory, emotion detection, and proactive care.
+<h1 align="center">✨ NOVA — Your Intelligent AI Companion</h1>
+
+<p align="center">
+  <em>A comprehensive, voice-enabled AI assistant with emotional intelligence, persistent memory, and proactive care — built with Python, Flask, and modern LLMs.</em>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.9+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python"/>
+  <img src="https://img.shields.io/badge/Flask-2.x-000000?style=flat-square&logo=flask&logoColor=white" alt="Flask"/>
+  <img src="https://img.shields.io/badge/Groq-Llama%203.1-F55036?style=flat-square&logo=meta&logoColor=white" alt="Groq"/>
+  <img src="https://img.shields.io/badge/Gemini-Pro-4285F4?style=flat-square&logo=google&logoColor=white" alt="Gemini"/>
+  <img src="https://img.shields.io/badge/WebSocket-Real--time-010101?style=flat-square&logo=socket.io&logoColor=white" alt="WebSocket"/>
+  <img src="https://img.shields.io/badge/License-Personal-lightgrey?style=flat-square" alt="License"/>
+</p>
+
+<p align="center">
+  <a href="#-features">Features</a> •
+  <a href="#️-tech-stack">Tech Stack</a> •
+  <a href="#-architecture">Architecture</a> •
+  <a href="#-installation">Installation</a> •
+  <a href="#-usage">Usage</a> •
+  <a href="#-commands">Commands</a> •
+  <a href="#-api-reference">API Reference</a> •
+  <a href="#-project-structure">Project Structure</a>
+</p>
+
+---
+
+## 🎯 What is NOVA?
+
+**NOVA** (Next-gen Omniscient Virtual Assistant) is a full-stack AI assistant that goes beyond simple chat — it understands emotions, builds relationships, tracks milestones, manages schedules, and proactively cares about your well-being. It features both a beautiful **web interface** and a powerful **CLI** with voice support.
+
+Unlike generic chatbots, NOVA has:
+- 🧠 **Persistent memory** — Remembers facts, preferences, and conversations across sessions
+- 😊 **Emotional intelligence** — Detects and responds to your emotional state
+- 💙 **Relationship evolution** — Tracks trust, intimacy, and milestones over time
+- 🧬 **Adaptive personality** — Dynamically adjusts response style based on context
+- 🎯 **Proactive care** — Schedules follow-ups and wellness check-ins
+
+---
 
 ## ✨ Features
 
-### Core Capabilities
-- 🌐 **Modern Web Interface**: Beautiful, responsive web-based interface with real-time updates via WebSocket
-- 🎤 **Voice Input/Output**: Natural speech recognition and text-to-speech (browser-based in web mode, system-based in CLI)
-- 🧠 **Persistent Memory**: Remembers important facts, preferences, and conversation context
-- 💬 **Advanced Conversational AI**: Powered by Groq's Llama 3.1 or Google's Gemini models
-- 📝 **Chat History**: Persistent conversation history with export functionality
+### 🌐 Dual Interface
+| Web Interface | CLI Interface |
+|:---:|:---:|
+| Modern, responsive design | Voice & text modes |
+| Real-time WebSocket updates | System-level TTS |
+| Animated avatar with states | Full command support |
+| Dark/light theme toggle | Minimal dependencies |
+| Code syntax highlighting | Portable & fast |
 
-### Advanced Features
-- 🔍 **Web Search**: Real-time web search via DuckDuckGo integration
-- 💻 **Code Assistant**: Generate, explain, debug, and review code with Cursor API support
-- 😊 **Emotion Detection**: Analyzes emotional patterns in conversations
-- 💙 **Relationship Tracking**: Tracks and evolves relationship dynamics over time
-- 🎯 **Proactive Care**: Automated check-ins and wellness reminders
-- 🎉 **Milestone Tracking**: Track important dates, events, and recurring milestones
-- 📅 **Schedule Management**: Manage classes, assignments, and deadlines
-- 🎨 **Animated Avatar**: Visual feedback with animated avatar states
-- 🧬 **Personality Engine**: Dynamic personality adaptation based on interactions
-- 🌐 **Multi-language Support**: Hinglish decoder and text normalization
-- 🗣️ **GenZ Slang Support**: Understands modern slang and casual language
-- 🌓 **Themes**: Dark and light theme support
-- ⚙️ **Highly Configurable**: Extensive configuration options via `.env` file
+### Core Capabilities
+- 💬 **Multi-LLM Conversational AI** — Intelligent routing between Groq (Llama 3.1) and Google Gemini
+- 🎤 **Voice I/O** — Speech recognition via Google Speech API + TTS via Edge-TTS (CLI) / Web Speech API (browser)
+- 🔍 **Real-Time Web Search** — DuckDuckGo integration for up-to-date information
+- 💻 **Code Assistant** — Generate, explain, debug, and review code with optional Cursor API
+- 📝 **Chat History** — Persistent conversation logs with export to file
+- 📅 **Schedule Management** — Track classes, assignments, and deadlines with auto-reminders
+- 🎉 **Milestone Tracking** — Track birthdays, anniversaries, and recurring events
+
+### Intelligence Engine
+- 🧠 **Context-Aware Memory** — Tag-based, emotion-categorized memory retrieval with relevance scoring
+- 😊 **Emotion Detection** — Keyword + context + pattern analysis for 8+ emotion categories
+- 🧬 **Personality Modes** — Emotional support, academic, code review, casual, motivational, and deep conversation
+- 💙 **Relationship Stages** — Stranger → Acquaintance → Friend → Close Friend → Best Friend progression
+- 🎯 **Proactive Care** — Automated wellness check-ins & mood follow-ups
+
+### Language & Localization
+- 🌐 **Multi-Language Speech** — Input in any language, auto-translated to English
+- 🗣️ **GenZ Slang Decoder** — Understands modern slang like "no cap", "bussin", "slay"
+- 🇮🇳 **Hinglish Support** — Decodes Hindi-English code-mixed text seamlessly
+- ✍️ **Text Normalization** — Handles abbreviations, numbers, and informal text
+
+---
+
+## 🛠️ Tech Stack
+
+### Backend
+| Technology | Role | Details |
+|:---|:---|:---|
+| **Python 3.9+** | Core Runtime | Main application language |
+| **Flask 2.x** | Web Framework | Serves web interface, REST APIs |
+| **Flask-SocketIO** | WebSocket | Real-time bidirectional communication |
+| **Flask-CORS** | CORS | Cross-origin resource sharing |
+| **Groq SDK** | LLM Provider | Access to Llama 3.1 (70B/8B) |
+| **google-generativeai** | LLM Provider | Access to Gemini Pro models |
+| **edge-tts** | Text-to-Speech | Neural TTS with 50+ voices |
+| **SpeechRecognition** | Speech-to-Text | Google Speech API integration |
+| **mtranslate** | Translation | Multi-language to English translation |
+| **DuckDuckGo Search** | Web Search | Real-time search with no API key |
+| **pygame** | Audio Playback | TTS audio playback engine |
+| **python-dotenv** | Config | Environment variable management |
+| **Rich** | CLI Formatting | Beautiful terminal output |
+
+### Frontend (Web Interface)
+| Technology | Role | Details |
+|:---|:---|:---|
+| **HTML5** | Structure | Semantic markup with Jinja2 templating |
+| **Vanilla CSS** | Styling | Custom design system with CSS variables |
+| **Vanilla JavaScript** | Logic | Modular ES6+ with 9 JS modules |
+| **Web Speech API** | Browser Voice | Native speech recognition & synthesis |
+| **Socket.IO Client** | Real-Time | WebSocket for live message streaming |
+| **CSS Animations** | UX | Smooth transitions and micro-animations |
+
+### Data & Storage
+| Technology | Role | Details |
+|:---|:---|:---|
+| **JSON Files** | Persistence | User data, memories, relationships, schedules |
+| **File System** | Logging | Structured logging with rotation support |
+
+### Development & Tooling
+| Technology | Role |
+|:---|:---|
+| **Git** | Version control |
+| **venv** | Python virtual environment |
+| **argparse** | CLI argument parsing |
+| **asyncio** | Async TTS generation |
+
+---
+
+## 🏗 Architecture
+
+### High-Level System Design
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│                        USER INTERFACES                           │
+├──────────────────┬───────────────────┬───────────────────────────┤
+│   Web Browser    │   CLI (Voice)     │   CLI (Text)              │
+│   localhost:5001 │   python main.py  │   python main.py --text   │
+└────────┬─────────┴─────────┬─────────┴────────────┬──────────────┘
+         │                   │                      │
+         ▼                   ▼                      ▼
+┌──────────────────┐  ┌──────────────┐  ┌───────────────────┐
+│  Flask + SocketIO│  │ SpeechToText │  │  Direct stdin     │
+│  (web/app.py)    │  │   Module     │  │  Input            │
+│  10 API Blueprints│  │ (Google ASR) │  │                   │
+└────────┬─────────┘  └──────┬───────┘  └─────────┬─────────┘
+         │                   │                      │
+         └───────────────────┼──────────────────────┘
+                             ▼
+              ┌──────────────────────────────┐
+              │       CHATBOT ENGINE         │
+              │       (Chatbot.py)           │
+              │  • Command Processing        │
+              │  • Memory Management         │
+              │  • Context Assembly          │
+              │  • Response Orchestration    │
+              └──────────────┬───────────────┘
+                             │
+         ┌───────────────────┼───────────────────┐
+         ▼                   ▼                   ▼
+┌──────────────┐  ┌──────────────────┐  ┌──────────────────┐
+│ LLM Provider │  │ Intelligence     │  │  Utilities       │
+│              │  │ Engine           │  │                  │
+│ • Groq       │  │ • EmotionDetect  │  │ • WebSearch      │
+│ • Gemini     │  │ • Personality    │  │ • CodeAssistant  │
+│ • Cursor     │  │ • Relationship   │  │ • TextNormalizer │
+│ (auto-route) │  │ • ProactiveCare  │  │ • GenZSlang      │
+│              │  │ • Milestones     │  │ • Hinglish       │
+│              │  │ • Schedule       │  │ • ResponseLength │
+└──────────────┘  └──────────────────┘  └──────────────────┘
+                             │
+                             ▼
+              ┌──────────────────────────────┐
+              │      DATA PERSISTENCE        │
+              │      (Data/ directory)       │
+              │                              │
+              │  • {UserID}_ChatLog.json     │
+              │  • {UserID}_Memory.json      │
+              │  • {UserID}_Relationship.json│
+              │  • {UserID}_Milestones.json  │
+              │  • {UserID}_ProactiveCare.json│
+              │  • default_Profile.json      │
+              └──────────────────────────────┘
+```
+
+### LLM Routing Strategy
+
+The `LLMProvider` intelligently routes queries to the optimal model:
+
+| Query Type | Primary Model | Fallback | Reason |
+|:---|:---|:---|:---|
+| **Research / Factual** | Gemini Pro | Groq Llama 3.1 | Gemini has broader knowledge |
+| **Code Generation** | Cursor API | Groq Llama 3.1 | Specialized code models |
+| **Casual Conversation** | Groq Llama 3.1 | Gemini Pro | Faster response times |
+| **Emotional / Sensitive** | Groq Llama 3.1 | Gemini Pro | Better nuanced responses |
+
+### Web API Architecture
+
+The web interface is built with **10 Flask Blueprint modules**, each handling a specific domain:
+
+| Blueprint | Prefix | Responsibility |
+|:---|:---|:---|
+| `chat` | `/api/chat` | Send messages, get responses |
+| `memory` | `/api/memory` | CRUD operations on memories |
+| `voice` | `/api/voice` | Voice synthesis & recognition |
+| `profile` | `/api/profile` | User profile management |
+| `search` | `/api/search` | Web search queries |
+| `emotions` | `/api/emotions` | Emotion history & stats |
+| `care` | `/api/care` | Proactive care check-ins |
+| `milestones` | `/api/milestones` | Milestone CRUD & reminders |
+| `websocket` | — | Real-time event handling |
+
+### Frontend Module Map
+
+| Module | Size | Responsibility |
+|:---|:---|:---|
+| `main.js` | 5.7 KB | App initialization, routing, themes |
+| `chat.js` | 32.3 KB | Chat interface, message rendering, markdown |
+| `ui.js` | 23.4 KB | UI components, modals, panels, sidebars |
+| `api.js` | 4.1 KB | HTTP & WebSocket API abstraction |
+| `voice.js` | 9.8 KB | Web Speech API integration |
+| `search.js` | 5.0 KB | Search interface & results |
+| `research-canvas.js` | 10.1 KB | Research mode with canvas UI |
+| `avatar.js` | 2.4 KB | Animated avatar state machine |
+| `profile.js` | 2.8 KB | User profile panel |
+
+---
 
 ## 📋 Prerequisites
 
-- **Python**: 3.9 or higher
-- **Microphone**: Required for voice mode (CLI)
-- **API Key**: At least one of the following:
-  - Groq API key ([Get one here](https://console.groq.com/))
-  - Google Gemini API key ([Get one here](https://makersuite.google.com/app/apikey))
-- **Browser**: Modern browser (Chrome, Edge, or Safari) for web interface voice features
+- **Python** 3.9 or higher
+- **pip** (Python package manager)
+- **Microphone** (required for CLI voice mode)
+- **API Key** — At least **one** of the following:
+  - [**Groq API Key**](https://console.groq.com/) — Free tier available
+  - [**Google Gemini API Key**](https://makersuite.google.com/app/apikey) — Free tier available
+- **Browser** — Chrome, Edge, or Safari recommended for web interface voice features
+
+---
 
 ## 🚀 Installation
 
-### Step 1: Clone or Navigate to Project
+### 1. Clone the Repository
+
 ```bash
+git clone https://github.com/Sidhant185/NOVA.git
 cd NOVA
 ```
 
-### Step 2: Create Virtual Environment
+### 2. Create & Activate Virtual Environment
+
 ```bash
 python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate        # macOS / Linux
+# venv\Scripts\activate          # Windows
 ```
 
-### Step 3: Install Dependencies
+### 3. Install Dependencies
+
 ```bash
 pip install -r Requirements.txt
 ```
 
-### Step 4: Configure Environment Variables
-
-Create a `.env` file in the project root (or copy from `.env.example` if available):
+### 4. Configure Environment
 
 ```bash
-# Create .env file
-touch .env
+cp .env.example .env
 ```
 
-Add your configuration to `.env`:
+Edit `.env` with your API keys:
 
 ```env
-# Required: At least one API key must be provided
-GROQ_API_KEY=your_groq_api_key_here
-# OR
-GEMINI_API_KEY=your_gemini_api_key_here
+# ───── REQUIRED: At least one ─────
+GROQ_API_KEY=gsk_xxxxxxxxxxxx
+GEMINI_API_KEY=AIzaxxxxxxxxxx
 
-# Optional: Code Assistant (for enhanced code features)
-CURSOR_API_KEY=your_cursor_api_key_here
+# ───── Optional ─────
+CURSOR_API_KEY=your_cursor_key     # Enhanced code features
+FLASK_SECRET_KEY=your_secret_key   # Production web server
 
-# User Configuration
-Username=Sidhant
-UserID=Sidhant
+# ───── User Config ─────
+Username=YourName
+UserID=YourName                    # Must be "Sidhant" or "default"
 AssistantName=Nova
 
-# Speech Recognition
+# ───── Speech & Voice ─────
 InputLanguage=en-US
-
-# Text-to-Speech
 AssistantVoice=en-US-AriaNeural
 TTSEnabled=true
 TTSSpeed=+1%
 
-# Chat Settings
+# ───── Chat & Logging ─────
 MaxChatHistory=10
-
-# Logging
 LogLevel=INFO
 LogToFile=true
 ```
 
-## ⚙️ Configuration
+### 5. Run NOVA
 
-### Required Settings
-
-At least **one** of the following API keys must be configured:
-- `GROQ_API_KEY`: Your Groq API key
-- `GEMINI_API_KEY`: Your Google Gemini API key
-
-### Optional Settings
-
-#### User Configuration
-- `Username`: Your name (default: "Sidhant")
-- `UserID`: User identifier - must be "Sidhant" or "default" (default: "Sidhant")
-- `AssistantName`: Assistant name (default: "Nova")
-
-#### Speech & Voice
-- `InputLanguage`: Speech recognition language (default: "en-US")
-- `AssistantVoice`: TTS voice identifier (default: "en-US-AriaNeural")
-- `TTSEnabled`: Enable/disable text-to-speech (default: "true")
-- `TTSSpeed`: TTS speed adjustment (default: "+1%")
-
-#### Chat Settings
-- `MaxChatHistory`: Number of recent messages in context (default: 10)
-
-#### Logging
-- `LogLevel`: Logging level - DEBUG, INFO, WARNING, ERROR, CRITICAL (default: "INFO")
-- `LogToFile`: Enable file logging (default: "true")
-
-#### Advanced Features
-- `CURSOR_API_KEY`: Cursor API key for enhanced code assistance (optional)
-
-### Available TTS Voices
-
-You can change `AssistantVoice` to any edge-tts voice. Common options:
-- `en-US-AriaNeural` (default, female)
-- `en-US-JennyNeural` (female)
-- `en-US-GuyNeural` (male)
-- `en-GB-SoniaNeural` (British female)
-- `en-AU-NatashaNeural` (Australian female)
-
-To see all available voices:
 ```bash
-edge-tts --list-voices
+# Web Interface (recommended)
+python run_web.py
+
+# CLI Voice Mode
+python main.py
+
+# CLI Text Mode
+python main.py --text
 ```
+
+---
 
 ## 🎮 Usage
 
-### Web Interface (Recommended) 🌐
+### Web Interface 🌐 *(Recommended)*
 
-The web interface provides the best user experience with a modern UI, real-time updates, and browser-based voice features.
-
-**Start the web server:**
 ```bash
 python run_web.py
 ```
 
-**Access the interface:**
-Open your browser and navigate to:
-```
-http://localhost:5001
-```
+Open **http://localhost:5001** in your browser.
 
-**Web Interface Features:**
-- ✨ Modern, responsive design
-- 💬 Real-time chat with message history
-- 🎤 Voice input/output (browser-based Web Speech API)
-- 🎨 Animated avatar with different states
+**Web Features:**
+- ✨ Modern, responsive chat interface
+- 🎤 Voice input/output via Web Speech API
+- 🎨 Animated avatar with idle, listening, thinking, and speaking states
+- 🌓 Dark / light theme toggle
+- 💻 Code blocks with syntax highlighting
 - 🧠 Memory management panel
-- 🌓 Dark/light theme toggle
-- 💻 Code syntax highlighting
-- 🔄 WebSocket for real-time updates
-- 📊 Emotion and relationship insights
-- 📅 Schedule and milestone views
+- 📊 Emotion & relationship insights sidebar
+- 📅 Schedule & milestone views
+- 🔍 Research canvas for deep-dive queries
+- 🔄 Real-time updates via WebSocket
 
 ### CLI Voice Mode 🎤
 
-Run NOVA with voice input/output in terminal:
 ```bash
 python main.py
 ```
 
-**Features:**
-- Voice input via microphone
-- Text-to-speech output
-- Full command support
-- Persistent memory
+Speak into your microphone. NOVA responds with text-to-speech.
 
-### CLI Text-Only Mode 💬
+### CLI Text Mode 💬
 
-Run NOVA without voice (text input only):
 ```bash
 python main.py --text
 ```
 
-**Features:**
-- Text-based conversation
-- All commands available
-- No microphone required
-- Faster response times
+Pure text-based conversation — no microphone needed, fastest response times.
 
-### CLI Voice Mode (No TTS) 🔇
+### CLI Voice (No TTS) 🔇
 
-Run in voice mode but disable text-to-speech:
 ```bash
 python main.py --no-tts
 ```
 
-**Use cases:**
-- Voice input with text-only output
-- Faster responses without TTS delay
-- Quiet environments
+Voice input only, responses appear as text (no audio playback).
 
-### Standalone Chatbot 🤖
-
-Run the chatbot directly (text-only, no voice):
-```bash
-python Chatbot.py
-```
+---
 
 ## 📖 Commands
 
-NOVA supports a comprehensive set of commands organized by category:
-
-### Basic Commands
-
+### Basic
 | Command | Description |
-|---------|-------------|
+|:---|:---|
 | `/help` | Show all available commands |
 | `/clear` | Clear chat history |
 | `/time` | Show current date and time |
 | `/whoami` | Show user information |
-| `/bye`, `/exit`, `/quit` | Exit the assistant |
+| `/bye` `/exit` `/quit` | Exit the assistant |
 
-### Memory Commands
-
+### Memory
 | Command | Description | Example |
-|---------|-------------|---------|
-| `/remember <fact>` | Save a memory | `/remember birthday: August 9, 2006` |
-| `/memories` | List all saved memories | `/memories` |
-| `/forget <key>` | Remove a memory by key | `/forget birthday` |
+|:---|:---|:---|
+| `/remember <fact>` | Save a memory | `/remember birthday: August 9` |
+| `/memories` | List all saved memories | |
+| `/forget <key>` | Remove a memory | `/forget birthday` |
 
-### Utility Commands
-
+### Utility
 | Command | Description |
-|---------|-------------|
-| `/search <query>` | Search the web |
+|:---|:---|
+| `/search <query>` | Search the web via DuckDuckGo |
 | `/summary` | Get conversation summary |
 | `/export` | Export chat history to file |
 
-### Code Commands
-
+### Code
 | Command | Description | Example |
-|---------|-------------|---------|
-| `/code <description>` | Generate code | `/code create a function to sort a list` |
-| `/explain <code>` | Explain what code does | `/explain def sort_list(lst): return sorted(lst)` |
-| `/debug <code>` | Help debug code issues | `/debug [your code here]` |
-| `/review <code>` | Review code for best practices | `/review [your code here]` |
+|:---|:---|:---|
+| `/code <desc>` | Generate code | `/code binary search in Python` |
+| `/explain <code>` | Explain code | `/explain def fib(n): ...` |
+| `/debug <code>` | Debug code issues | `/debug [your code]` |
+| `/review <code>` | Review for best practices | `/review [your code]` |
 
-### Personalization Commands
-
+### Personalization
 | Command | Description |
-|---------|-------------|
-| `/relationship` | Show relationship status and insights |
+|:---|:---|
+| `/relationship` | Show relationship status & insights |
 | `/mood` | Show recent emotional patterns |
 | `/emotions` | Show emotion history |
 | `/check-in` | Show pending proactive check-ins |
 | `/milestones` | List all milestones |
 | `/upcoming` | Show upcoming milestones |
-| `/add_milestone <type>\|<date>\|<description>\|[importance]\|[recurring]` | Add a milestone |
+| `/add_milestone <type>\|<date>\|<desc>\|[importance]\|[recurring]` | Add a milestone |
 
-**Milestone Example:**
+### Schedule
+| Command | Description |
+|:---|:---|
+| `/schedule` | Show upcoming classes & assignments |
+| `/add_class <name> \| <days> \| <time> \| [location]` | Add a class |
+| `/add_assignment <title> \| <due_date> \| [class] \| [desc]` | Add an assignment |
+
+**Examples:**
 ```
 /add_milestone birthday|2024-08-09|My Birthday|high|true
-```
-
-### Schedule Commands
-
-| Command | Description |
-|---------|-------------|
-| `/schedule` | Show upcoming classes and assignments |
-| `/add_class <name> \| <days> \| <time> \| [location]` | Add a class |
-| `/add_assignment <title> \| <due_date> \| [class_name] \| [description]` | Add an assignment |
-
-**Class Example:**
-```
 /add_class Computer Science|Mon,Wed,Fri|10:00 AM|Room 101
+/add_assignment Final Project|2024-12-15|CS|Build a web app
 ```
 
-**Assignment Example:**
-```
-/add_assignment Final Project|2024-12-15|Computer Science|Build a web app
-```
+---
+
+## 🔌 API Reference
+
+All REST endpoints are prefixed with `/api`. Real-time events use WebSocket via Socket.IO.
+
+### Chat
+| Method | Endpoint | Description |
+|:---|:---|:---|
+| `POST` | `/api/chat/send` | Send a message and get AI response |
+| `GET` | `/api/chat/history` | Retrieve conversation history |
+| `DELETE` | `/api/chat/clear` | Clear chat history |
+
+### Memory
+| Method | Endpoint | Description |
+|:---|:---|:---|
+| `GET` | `/api/memory/` | Get all memories |
+| `POST` | `/api/memory/add` | Add a new memory |
+| `DELETE` | `/api/memory/forget/<key>` | Delete a memory |
+
+### Emotions & Care
+| Method | Endpoint | Description |
+|:---|:---|:---|
+| `GET` | `/api/emotions/history` | Get emotion history |
+| `GET` | `/api/emotions/stats` | Get emotion statistics |
+| `GET` | `/api/care/check-ins` | Get pending check-ins |
+
+### Profile & Search
+| Method | Endpoint | Description |
+|:---|:---|:---|
+| `GET` | `/api/profile/` | Get user profile |
+| `POST` | `/api/search/query` | Perform web search |
+
+### WebSocket Events
+| Event | Direction | Description |
+|:---|:---|:---|
+| `connect` | Client → Server | Establish connection |
+| `send_message` | Client → Server | Send chat message |
+| `response` | Server → Client | Receive AI response |
+| `typing` | Server → Client | Typing indicator |
+| `error` | Server → Client | Error notification |
+
+---
 
 ## 📁 Project Structure
 
 ```
 NOVA/
-├── main.py                    # CLI entry point
-├── run_web.py                 # Web interface entry point
-├── Chatbot.py                 # Core chatbot logic
-├── SpeechToText.py            # Speech recognition
-├── TextToSpeech.py            # Text-to-speech
-├── config.py                  # Configuration management
+├── main.py                         # CLI entry point (voice & text modes)
+├── run_web.py                      # Web server launcher
+├── Chatbot.py                      # Core chatbot engine (1100+ lines)
+├── SpeechToText.py                 # Speech recognition with translation
+├── TextToSpeech.py                 # Edge-TTS synthesis + pygame playback
+├── config.py                       # Centralized configuration management
+├── compat.py                       # Python 3.9 compatibility patches
 │
-├── web/                       # Web interface
-│   ├── app.py                 # Flask application
-│   ├── session_manager.py     # Session management
-│   ├── api/                   # API endpoints
-│   │   ├── chat.py            # Chat API
-│   │   ├── memory.py          # Memory API
-│   │   ├── voice.py           # Voice API
-│   │   ├── websocket.py       # WebSocket handlers
-│   │   ├── profile.py         # User profile API
-│   │   ├── search.py          # Web search API
-│   │   ├── emotions.py        # Emotion tracking API
-│   │   ├── care.py            # Proactive care API
-│   │   └── milestones.py      # Milestone tracking API
+├── web/                            # ── Web Interface ──
+│   ├── app.py                      # Flask app factory + blueprint registration
+│   ├── session_manager.py          # Session lifecycle management
+│   ├── api/                        # REST API layer (10 blueprints)
+│   │   ├── chat.py                 # Chat send/history/clear
+│   │   ├── memory.py               # Memory CRUD
+│   │   ├── voice.py                # Voice synthesis endpoints
+│   │   ├── websocket.py            # Socket.IO event handlers
+│   │   ├── profile.py              # User profile management
+│   │   ├── search.py               # Web search proxy
+│   │   ├── emotions.py             # Emotion history & stats
+│   │   ├── care.py                 # Proactive care endpoints
+│   │   └── milestones.py           # Milestone CRUD
 │   ├── templates/
-│   │   └── index.html         # Main HTML template
+│   │   └── index.html              # Main SPA template (Jinja2)
 │   └── static/
-│       ├── css/               # Stylesheets
-│       │   ├── style.css
-│       │   ├── theme.css
-│       │   └── components/    # Component styles
-│       ├── js/                # JavaScript files
-│       │   ├── main.js
-│       │   ├── chat.js
-│       │   ├── api.js
-│       │   └── ...
-│       └── images/            # Images and assets
+│       ├── css/                    # Design system
+│       │   ├── style.css           # Core layout & typography
+│       │   ├── theme.css           # CSS variables, dark/light themes
+│       │   ├── animations.css      # Keyframe animations
+│       │   ├── enhancements.css    # Visual polish & effects
+│       │   └── components/         # 9 component stylesheets
+│       │       ├── chat.css        # Chat bubble styles
+│       │       ├── sidebar.css     # Sidebar panel
+│       │       ├── header.css      # Top navigation
+│       │       ├── avatar.css      # Animated avatar
+│       │       ├── code-panel.css  # Code syntax blocks
+│       │       ├── modals.css      # Modal dialogs
+│       │       ├── search.css      # Search interface
+│       │       ├── research-canvas.css  # Research mode
+│       │       └── utilities.css   # Helper classes
+│       ├── js/                     # Frontend modules
+│       │   ├── main.js             # App init & theme switching
+│       │   ├── chat.js             # Chat logic & rendering
+│       │   ├── ui.js               # UI components & interactions
+│       │   ├── api.js              # HTTP + WebSocket client
+│       │   ├── voice.js            # Web Speech API wrapper
+│       │   ├── search.js           # Search UI
+│       │   ├── research-canvas.js  # Research mode logic
+│       │   ├── avatar.js           # Avatar state machine
+│       │   └── profile.js          # Profile panel
+│       └── images/                 # Static assets
 │
-├── utils/                     # Utility modules
-│   ├── logger.py              # Logging setup
-│   ├── llm_provider.py        # LLM provider abstraction (Groq/Gemini)
-│   ├── code_assistant.py      # Code generation and assistance
-│   ├── emotion_detector.py    # Emotion detection
-│   ├── relationship_tracker.py # Relationship tracking
-│   ├── personality_engine.py  # Personality adaptation
-│   ├── proactive_care.py      # Proactive care system
-│   ├── milestone_tracker.py   # Milestone management
-│   ├── schedule_tracker.py    # Schedule management
-│   ├── text_normalizer.py    # Text normalization
-│   ├── response_enhancer.py   # Response enhancement
-│   ├── response_length_detector.py # Response length detection
-│   ├── genz_slang.py         # GenZ slang support
-│   ├── hinglish_decoder.py   # Hinglish language support
-│   └── __init__.py
+├── utils/                          # ── Intelligence Modules ──
+│   ├── llm_provider.py             # Multi-LLM router (Groq/Gemini/Cursor)
+│   ├── emotion_detector.py         # Keyword + context emotion analysis
+│   ├── personality_engine.py       # Adaptive personality mode selection
+│   ├── relationship_tracker.py     # Trust/intimacy/stage progression
+│   ├── proactive_care.py           # Wellness check-in scheduler
+│   ├── milestone_tracker.py        # Event & milestone management
+│   ├── schedule_tracker.py         # Class & assignment tracking
+│   ├── code_assistant.py           # Code gen/explain/debug/review
+│   ├── response_enhancer.py        # Response quality improvement
+│   ├── response_length_detector.py # Dynamic response length control
+│   ├── text_normalizer.py          # Text cleanup & formatting
+│   ├── genz_slang.py               # GenZ slang dictionary & decoder
+│   ├── hinglish_decoder.py         # Hindi-English code-mixing decoder
+│   └── logger.py                   # Structured logging setup
 │
-├── Data/                      # User data storage
-│   ├── default_Profile.json  # Default user profile
-│   ├── Sidhant_ChatLog.json  # Chat history
-│   ├── Sidhant_Memory.json   # User memories
-│   ├── Sidhant_Milestones.json # Milestones
-│   ├── Sidhant_ProactiveCare.json # Proactive care data
-│   ├── Sidhant_Relationship.json # Relationship data
-│   └── ...
+├── Data/                           # ── User Data (gitignored) ──
+│   ├── default_Profile.json        # Default user profile template
+│   ├── {UserID}_ChatLog.json       # Conversation history
+│   ├── {UserID}_Memory.json        # Saved memories
+│   ├── {UserID}_Relationship.json  # Relationship progression
+│   ├── {UserID}_Milestones.json    # Tracked milestones
+│   └── {UserID}_ProactiveCare.json # Care check-in data
 │
-├── logs/                      # Application logs
-│   └── nova.log              # Main log file
-│
-├── Requirements.txt           # Python dependencies
-├── .env                       # Environment configuration (create this)
-└── README.md                  # This file
+├── logs/                           # Application logs (gitignored)
+├── Requirements.txt                # Python dependencies (23 packages)
+├── .env.example                    # Environment template
+├── .gitignore                      # Git exclusions
+└── README.md                       # You are here
 ```
+
+---
+
+## ⚙️ Configuration Reference
+
+### Required Settings
+
+> At least **one** API key must be configured.
+
+| Variable | Description | Required |
+|:---|:---|:---:|
+| `GROQ_API_KEY` | Groq API key for Llama 3.1 | One of these |
+| `GEMINI_API_KEY` | Google Gemini API key | One of these |
+
+### Optional Settings
+
+| Variable | Default | Description |
+|:---|:---|:---|
+| `Username` | `Sidhant` | Display name |
+| `UserID` | `Sidhant` | Data file prefix (`Sidhant` or `default`) |
+| `AssistantName` | `Nova` | Assistant's name |
+| `InputLanguage` | `en-US` | Speech recognition language code |
+| `AssistantVoice` | `en-US-AriaNeural` | Edge-TTS voice identifier |
+| `TTSEnabled` | `true` | Enable/disable text-to-speech |
+| `TTSSpeed` | `+1%` | TTS playback speed adjustment |
+| `MaxChatHistory` | `10` | Messages kept in LLM context |
+| `LogLevel` | `INFO` | Logging verbosity |
+| `LogToFile` | `true` | Write logs to `logs/nova.log` |
+| `CURSOR_API_KEY` | — | Optional Cursor API for code features |
+| `FLASK_SECRET_KEY` | auto-generated | Flask session secret (set for production) |
+
+### Available TTS Voices
+
+```bash
+edge-tts --list-voices    # List all 300+ voices
+```
+
+**Popular choices:**
+| Voice | Gender | Accent |
+|:---|:---|:---|
+| `en-US-AriaNeural` | Female | American (default) |
+| `en-US-JennyNeural` | Female | American |
+| `en-US-GuyNeural` | Male | American |
+| `en-GB-SoniaNeural` | Female | British |
+| `en-AU-NatashaNeural` | Female | Australian |
+| `en-IN-NeerjaNeural` | Female | Indian |
+
+---
 
 ## 🔧 Troubleshooting
 
-### Web Interface Issues
+<details>
+<summary><strong>🌐 Web Interface Issues</strong></summary>
 
-**"Connection refused"**
-- Ensure `run_web.py` is running
-- Check if port 5001 is available
-- Try a different port by modifying `run_web.py`
+| Problem | Solution |
+|:---|:---|
+| **"Connection refused"** | Ensure `run_web.py` is running; check port 5001 is free |
+| **"Module not found"** | Activate venv: `source venv/bin/activate` → `pip install -r Requirements.txt` |
+| **WebSocket fails** | Check browser console (F12); ensure firewall allows connections |
+| **Voice not working** | Grant microphone permissions; use Chrome/Edge/Safari |
+| **Avatar not animating** | Clear browser cache; check console for JS errors |
 
-**"Module not found"**
-- Activate virtual environment: `source venv/bin/activate`
-- Install dependencies: `pip install -r Requirements.txt`
-- Ensure Flask dependencies are installed: `pip install flask flask-socketio flask-cors`
+</details>
 
-**WebSocket connection fails**
-- Check browser console for errors (F12)
-- Ensure firewall allows connections
-- Try refreshing the page
-- Check that SocketIO is properly initialized
+<details>
+<summary><strong>🎤 Speech Recognition Issues</strong></summary>
 
-**Voice not working in browser**
-- Grant microphone permissions in browser settings
-- Use Chrome, Edge, or Safari (best Web Speech API support)
-- Check browser console for permission errors
-- Ensure HTTPS or localhost (required for microphone access)
+| Problem | Solution |
+|:---|:---|
+| **"No speech detected"** | Check microphone permissions; test mic in other apps |
+| **"Could not understand"** | Reduce background noise; speak clearly |
+| **Wrong language** | Set `InputLanguage` in `.env` (e.g., `en-US`, `hi-IN`) |
+| **Browser compatibility** | Use Chrome/Edge/Safari for best Web Speech API support |
 
-**Avatar not animating**
-- Check browser console for JavaScript errors
-- Ensure all static files are loading correctly
-- Clear browser cache and refresh
+</details>
 
-### Speech Recognition Issues
+<details>
+<summary><strong>🔊 TTS Issues</strong></summary>
 
-**"No speech detected"**
-- Check microphone permissions (system and browser)
-- Ensure microphone is working (test in other apps)
-- Adjust microphone volume in system settings
-- Speak clearly and wait for the listening indicator
+| Problem | Solution |
+|:---|:---|
+| **No audio output** | Check system volume; verify audio output device |
+| **Wrong voice** | Verify `AssistantVoice` is valid: `edge-tts --list-voices` |
+| **Audio lag** | Set `TTSSpeed=+0%` or `TTSEnabled=false` for faster responses |
 
-**"Could not understand audio"**
-- Speak more clearly and slowly
-- Reduce background noise
-- Adjust microphone volume
-- Check microphone quality
+</details>
 
-**Language issues**
-- Set `InputLanguage` in `.env` to match your language
-- Supported languages: `en-US`, `en-GB`, `es-ES`, `fr-FR`, etc.
-- Restart the application after changing language settings
+<details>
+<summary><strong>🔑 API Issues</strong></summary>
 
-**Browser compatibility**
-- Web Speech API works best in Chrome, Edge, or Safari
-- Firefox has limited support
-- Ensure you're using a recent browser version
+| Problem | Solution |
+|:---|:---|
+| **"Missing API keys"** | Check `.env` exists with at least one key; restart app |
+| **Rate limiting** | Wait and retry; consider upgrading API tier |
+| **API errors** | Verify key is valid; check `logs/nova.log` for details |
 
-### TTS (Text-to-Speech) Issues
+</details>
 
-**No audio output**
-- Check system volume and audio settings
-- Test audio in other applications
-- Verify audio output device is selected
-- Check browser audio permissions (web mode)
+<details>
+<summary><strong>⚠️ General Issues</strong></summary>
 
-**Wrong voice**
-- Verify `AssistantVoice` in `.env` is a valid edge-tts voice
-- List available voices: `edge-tts --list-voices`
-- Restart application after changing voice
+| Problem | Solution |
+|:---|:---|
+| **Import errors** | Activate venv; reinstall deps; check Python ≥ 3.9 |
+| **File not found** | Ensure `Data/` dir exists; check `UserID` matches filenames |
+| **Permission errors** | `chmod -R 755 Data logs` |
+| **Port in use** | `lsof -i :5001` → kill process, or change port in `run_web.py` |
 
-**Audio lag**
-- Reduce `TTSSpeed` in `.env` (e.g., `+0%` or `-10%`)
-- Disable TTS for faster responses: `TTSEnabled=false`
-- Check system performance and close other applications
+</details>
 
-**Browser TTS not working**
-- Use Chrome/Edge for best Web Speech API support
-- Check browser console for errors
-- Ensure browser audio is not muted
-
-### API Issues
-
-**"Missing API keys"**
-- Ensure `.env` file exists in project root
-- Add at least one API key: `GROQ_API_KEY` or `GEMINI_API_KEY`
-- Check for typos in variable names
-- Restart application after adding keys
-
-**Rate limiting**
-- Groq and Gemini have rate limits
-- Wait a moment and try again
-- Consider upgrading API tier if needed
-- Check API usage dashboard
-
-**API errors**
-- Verify API key is valid and active
-- Check API service status
-- Review error messages in logs (`logs/nova.log`)
-- Ensure internet connection is stable
-
-### General Issues
-
-**Import errors**
-- Activate virtual environment: `source venv/bin/activate`
-- Reinstall dependencies: `pip install -r Requirements.txt`
-- Check Python version: `python3 --version` (requires 3.9+)
-
-**File not found errors**
-- Ensure `Data/` directory exists
-- Check file permissions for `Data/` and `logs/` directories
-- Verify `UserID` in `.env` matches data file names
-
-**Permission errors**
-- Check file permissions for `Data/` and `logs/` directories
-- Ensure write permissions: `chmod -R 755 Data logs`
-- On Windows, run as administrator if needed
-
-**Port already in use**
-- Change port in `run_web.py` or `web/app.py` (default is 5001)
-- Find process using port: `lsof -i :5001` (macOS/Linux) or `netstat -ano | findstr :5001` (Windows)
-- Kill process or use different port
-
-**Configuration validation errors**
-- Ensure `UserID` is either "Sidhant" or "default"
-- Check `.env` file format (no spaces around `=`)
-- Verify all required settings are present
+---
 
 ## 🧪 Development
 
 ### Testing Individual Components
 
-Test speech recognition:
 ```bash
+# Test speech recognition
 python SpeechToText.py
-```
 
-Test text-to-speech:
-```bash
+# Test text-to-speech
 python TextToSpeech.py
-```
 
-Test chatbot:
-```bash
+# Test chatbot (standalone text mode)
 python Chatbot.py
 ```
 
-### Logging
+### Viewing Logs
 
-Logs are written to `logs/nova.log` by default (if `LogToFile=true`).
-
-**Log Levels:**
-- `DEBUG`: Detailed information for debugging
-- `INFO`: General information about operations
-- `WARNING`: Warning messages for potential issues
-- `ERROR`: Error messages for failures
-- `CRITICAL`: Critical errors requiring immediate attention
-
-**View logs:**
 ```bash
-# View recent logs
+# Stream logs in real-time
 tail -f logs/nova.log
 
-# Search logs
+# Search for errors
 grep "ERROR" logs/nova.log
+
+# Debug-level logging
+# Set LogLevel=DEBUG in .env
 ```
 
 ### Memory System
 
-Memories are stored in `Data/{UserID}_Memory.json`. The chatbot automatically loads memories into context for personalized responses.
+Memories are stored in `Data/{UserID}_Memory.json` as structured entries:
 
-**Memory Format:**
-- Key-value pairs stored as JSON
-- Automatically loaded on startup
-- Persisted after each `/remember` command
-- Used to enhance conversation context
+```json
+{
+  "birthday": {
+    "value": "August 9, 2006",
+    "category": "personal",
+    "emotion": "happy",
+    "tags": ["birthday", "personal"],
+    "importance": 8,
+    "timestamp": "2024-01-15T10:30:00"
+  }
+}
+```
 
-### Data Files
+Memories are automatically loaded into LLM context for personalized responses, with relevance scoring based on keyword matching, tags, and importance.
 
-All user data is stored in the `Data/` directory:
-- `{UserID}_ChatLog.json`: Conversation history
-- `{UserID}_Memory.json`: Saved memories
-- `{UserID}_Milestones.json`: Tracked milestones
-- `{UserID}_ProactiveCare.json`: Proactive care data
-- `{UserID}_Relationship.json`: Relationship tracking data
+---
+
+## 📦 Dependencies
+
+All 23 Python packages in `Requirements.txt`:
+
+| Package | Purpose |
+|:---|:---|
+| `python-dotenv` | Environment variable loading |
+| `groq` | Groq LLM API client |
+| `google-generativeai` | Google Gemini API client |
+| `flask` | Web framework |
+| `flask-socketio` | WebSocket support |
+| `flask-cors` | CORS middleware |
+| `edge-tts` | Neural text-to-speech |
+| `pygame` | Audio playback |
+| `duckduckgo-search` | Web search |
+| `requests` | HTTP client |
+| `bs4` | HTML parsing |
+| `pillow` | Image processing |
+| `rich` | Terminal formatting |
+| `keyboard` | Keyboard input handling |
+| `mtranslate` | Translation |
+| `Appopener` | System app launching |
+| `pywhatkit` | WhatsApp & web utilities |
+| `cohere` | NLP utilities |
+| `googlesearch-python` | Google search fallback |
+| `selenium` | Browser automation |
+| `webdriver-manager` | Selenium driver management |
+| `PyQt5` | GUI framework (legacy) |
+| `importlib_metadata` | Python 3.9 compatibility |
+
+---
 
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to:
-- Submit issues for bugs or feature requests
-- Create pull requests for improvements
-- Share feedback and suggestions
+- 🐛 Submit issues for bugs or feature requests
+- 🔧 Create pull requests for improvements
+- 💡 Share feedback and suggestions
+
+---
 
 ## 📄 License
 
 This project is for personal use.
 
-## 🙏 Credits
+---
 
-- **Groq**: LLM API provider (Llama 3.1)
-- **Google**: Gemini API provider
-- **edge-tts**: Text-to-speech synthesis
-- **speech_recognition**: Speech recognition library
-- **DuckDuckGo**: Web search integration
-- **Flask**: Web framework
-- **SocketIO**: Real-time WebSocket communication
+## 🙏 Acknowledgments
+
+| Provider | Contribution |
+|:---|:---|
+| **[Groq](https://groq.com/)** | Ultra-fast LLM inference (Llama 3.1) |
+| **[Google](https://ai.google.dev/)** | Gemini Pro LLM API |
+| **[Edge-TTS](https://github.com/rany2/edge-tts)** | Microsoft Neural TTS voices |
+| **[DuckDuckGo](https://duckduckgo.com/)** | Privacy-focused web search |
+| **[Flask](https://flask.palletsprojects.com/)** | Lightweight Python web framework |
+| **[Socket.IO](https://socket.io/)** | Real-time bidirectional communication |
 
 ---
 
-Made with ❤️ by Sidhant Pande
+<p align="center">
+  Made with ❤️ by <a href="https://github.com/Sidhant185">Sidhant Pande</a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/github/stars/Sidhant185/NOVA?style=social" alt="Stars"/>
+  <img src="https://img.shields.io/github/forks/Sidhant185/NOVA?style=social" alt="Forks"/>
+</p>
